@@ -1,0 +1,60 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}
+\hwstyle
+\begin{document}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Answers to hw3} \hfill 
+{Spring 2016}}
+\addtocounter{section}{1}
+
+Prove that the following sets are r. e. complete:
+\begin{eqnarray*}
+A_{TM} &=& \set{(i, j) \enskip |  \enskip M_i(j) = 1} \\
+\textrm{HALT} &=& \set{(n, m) \enskip | \enskip M_n(m) \textrm{ halts}} \\
+\overline{\textrm{EMPTY}} &=& \set{n \enskip | \enskip W_n \neq \emptyset}
+\end{eqnarray*}
+
+\begin{enumerate}
+\item Show $A_{TM}$ is r. e. complete.
+
+$A_{TM}$ is r. e., because on input $(i, j)$ we can simulate $M_i$ on input $j$, and accept if $M_i$ accepts.
+
+To show that $A_{TM}$ is r. e. hard, we reduce $K = \set{i \enskip | \enskip M_i(i) = 1}$ to $A_{TM}$. As $K$ is r. e. hard, this shows $A_{TM}$ is r. e. hard as well.
+
+Let the reduction $f$ be the function such that $f(n) = (n, n)$.
+
+Then $n \in K \iff M_n(n) = 1 \iff (n, n) \in A_{TM} \iff f(n) \in A_{TM}$.
+
+As $A_{TM}$ is r. e. and r. e. hard, it is r. e. complete.
+
+{\bf Answer by: Larkin Flodin} \quad {\bf with edits by:}
+
+\item Show HALT is r. e. complete.
+
+HALT is r. e., because on input $(i, j)$ we can simulate $M_i(j)$ and accept if $M_i$ ever halts.
+
+For r. e. hardness, we reduce $K$ to HALT. Let $f(n) = (g(n), 0)$, where $g(n)$ is the index of the machine $M_{g(n)}$ that ignores its input, and simulates $M_n(n)$. If $M_n$ accepts, then $M_{g(n)}$ halts, otherwise if $M_n$ halts without accepting, $M_{g(n)}$ goes into an infinite loop.
+
+Then $n \in K \iff M_n(n) = 1 \iff M_{g(n)} \textrm{ halts on all inputs} \iff M_{g(n)}(0) \textrm{ halts} \iff (g(n), 0) \in HALT \iff f(n) \in HALT$.
+
+As HALT is r. e. and r. e. hard, it is r. e. complete.
+
+{\bf Answer by: Larkin Flodin} \quad {\bf with edits by:}
+
+\item Show $\overline{\textrm{EMPTY}}$ is r. e. complete.
+
+$\overline{\textrm{EMPTY}}$ is r. e., because on input $n$ we can dovetail the simulation of $M_n$ on all possible inputs, simulating one step of computation on the first input, then two steps on the first two inputs, and so on. If $M_n$ ever accepts an input, then accept.
+
+We reduce $\overline{\textrm{EMPTY}}$ to $A_{0, 17} = \set{i \enskip | \enskip M_i(0) = 17}$ to show r. e. hardness.
+
+Let $f$ be the function such that $f(n)$ is the index of the machine that ignores its input, and simulates $M_n(0)$. If $M_n$ outputs 17, then $M_{f(n)}$ accepts, otherwise $M_{f(n)}$ rejects.
+
+Then $n \in A_{0, 17} \iff M_n(0) = 17 \iff \exists x, M_{f(n)}(x) = 1 \iff W_{f(n)} \neq \emptyset \iff f(n) \in \overline{\textrm{EMPTY}}$.
+
+As $\overline{\textrm{EMPTY}}$ is r. e. and r. e. hard, it is r. e. complete.
+
+{\bf Answer by: Larkin Flodin} \quad {\bf with edits by:}
+
+\end{enumerate}
+
+\end{document}
