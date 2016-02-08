@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}                   
+\hwstyle
+\begin{document}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Answers to hw4} \hfill 
+{Spring 2016}}
+\addtocounter{section}{1}
+
+\begin{enumerate}
+\item Prove that if $S$ is r.e. hard or co-r.e. hard, then $S$ is not recursive. (From now on, the main way we will
+prove that a problem is not recursive, i.e., not computable, is to show that it is r.e. hard or co-r.e. hard.)
+
+{\bf Answer by:} \quad {\bf with edits by:}
+
+\item Prove Theorem 4.2 from the posted notes for Lecture 4.
+\[
+\begin{array}{lrcl}
+\textbf{2a.}&\mbox{{\rm EmptyNFA}} &=& \bigset{N}{N \mbox{ is an NFA};\; \sel(N) = \emptyset} \\[1ex]
+\textbf{2b.}&\Sigma^\star\mbox{{\rm DFA}} &=& \bigset{D}{D\mbox{ is a DFA};\;
+  \sel(D) = \Sigma^\star}\\[1ex]
+\textbf{2c.}&\mbox{{\rm MemberNFA}} &=& \bigset{\angle{N,w}}{N \mbox{ is an NFA};\; w\in \sel(N)}\\[1ex]
+\textbf{2d.}&\mbox{{\rm EqualDFA}} &=& \bigset{\angle{D_1,D_2}}{D_1,D_2 \mbox{ DFAs};\;\sel(D_1) =\sel(D_2)}\\[1ex]
+\textbf{2e.}&\mbox{{\rm EmptyCFL}} &=& \bigset{G}{G \mbox{ is a CFG};\; \sel(G) =
+  \emptyset} \\[1ex] 
+\textbf{2f.}&\mbox{{\rm MemberCFL}} &=& \bigset{\angle{G,w}}{G \mbox{ is a CFG};\;w\in\sel(G)}\\
+\end{array}
+\]
+
+\begin{itemize}
+\item \textbf{2d} There are two algorithms that we can use to determine if two DFA are in EqualDFA. 
+
+Option 1 is to convert both DFAs to their minimal representation, and then compare the resulting minimal represenations isomorphically to determine if they are equivalent.
+
+Option 2 is to check if the intersection of $D_1$ and $D_2$'s complement is $\emptyset$ and the intersection of $D_1$'s complement and $D_2$ is $\emptyset$. More formally:
+
+\[
+\begin{array}{lcr}
+L(D_1 \cap \overline{D_2}) & = & \emptyset \\
+L(\overline{D_1} \cap D_2) & = & \emptyset \\
+\end{array} 
+\]
+
+The intersection of two DFAs $D_1 = (Q_1, \Sigma_1, \delta_1, s_1, F_1)$ and $D_2 = (Q_1, \Sigma_2, \delta_2, s_2, F_2)$ is (assuming $\Sigma+1 = \Sigma_2: $
+
+\begin{equation*}
+D_{1\cap 2} = (Q_1 \times Q_2, \Sigma, \delta_{1\cap 2}, (s_1,s_2), F_{1\cap 2})
+\end{equation*}
+
+Where $F_{1\cap 2}$ is the set of end states $(f_1,f_2)$ where $f_1 \in F_1$ and $f_2 \in F_2$ and $\delta_{1\cap2}$ applies the partial transition functions from each original DFA to generate a new combined state. Once $D_1 \cap \overline{D_2}$ and $\overline{D_1} \cap D_2$ are generated, you can use EmptyNFA above to determine if $L(D_1 \cap \overline{D_2}) = \emptyset$ and $L(\overline{D_1} \cap D_2) = \emptyset$. If both are true, then $(D_1,D_2) \in EqualDFA$.
+
+\item \textbf{2e} The following algorithm will determine if $L(G) = \emptyset$ for a given CFG $G = (V,\Sigma, R, S)$:
+
+
+\begin{enumerate}
+\item Mark each terminal symbol in $G$ 
+\item Do: 
+\begin{enumerate}
+\item Mark any symbol A where there is a rule in G such that $A \rightarrow w_1w_2...w_k$ where each symbol in $w_1w_2...w_k$ has already been marked.
+\end{enumerate}
+ Until no new symbols get marked.
+\item If S is not marked: accept. Else: reject.
+\end{enumerate}
+
+\item \textbf{2f} The following algorithm will determine if $(G,w) \in MemberCFL$, that is,
+
+\begin{equation}
+\{\langle G,w\rangle\ | G \in CFG, w \in L(G)\}
+\end{equation}
+
+for a given CFG $G = (V, \Sigma, R, S)$ and a given string $w$ with length $n = |w|$. 
+
+\[
+\begin{array}{l}
+\textrm{Convert $G$ into its Chomsky Normal Form (CNF) representation, $G'$} \\ \\
+\textrm{Let $N[i,j]$ be the set of all symbols in $V$ that can derive in $G$ the string $x_i...x_j$, with $i < j$.} \\
+\textrm{for $i = 1$ to $n$ do}: N[i,i] = \{w_i\} \\
+\textrm{for $j = 1$ to $n-1$ do}: \\
+\quad \textrm{for $i = 1$ to $n-j$ do}: \\
+\quad\quad \textrm{for $k = 1$ to $i+j-1$ do}: \\
+\quad\quad\quad \textrm{if there is a rule} A \rightarrow BC \in R \textrm{where} B \in N[i,k] \textrm{and} C \in N[k+1,i+j]: \\
+\quad\quad\quad\quad \textrm{then add $A$ to} N[i, i+j]\\
+\textrm{if } S \in N[i,n] \textrm{: accept. Else: reject.} 
+\end{array}
+\]
+
+\end{itemize}
+{\bf Answer by: John Lalor} \quad {\bf with edits by:}
+
+\end{enumerate}
+
+\end{document}
