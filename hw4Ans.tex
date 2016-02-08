@@ -30,9 +30,21 @@ prove that a problem is not recursive, i.e., not computable, is to show that it 
 \begin{itemize}
 \item \textbf{2d} There are two algorithms that we can use to determine if two DFA are in EqualDFA. 
 
-Option 1 is to convert both DFAs to their minimal representation, and then compare the resulting minimal represenations isomorphically to determine if they are equivalent.
+\textbf{Option 1} is to convert both DFAs to their minimal representation, and then compare the resulting minimal represenations isomorphically to determine if they are equivalent. 
 
-Option 2 is to check if the intersection of $D_1$ and $D_2$'s complement is $\emptyset$ and the intersection of $D_1$'s complement and $D_2$ is $\emptyset$. More formally:
+In order to build the minimal representation, or standard automaton, for a DFA, use the following algorithm:
+
+\[
+\begin{array}{l}
+\textrm{Let $D_i = (Q, \Sigma, \delta, s, F)$ be a DFA} \\
+\textrm{Define a relation $A_{D_i} \subseteq K \times \Sigma*$ as:} \\
+\quad (q,w) \in A_{D_i} \iff (q,w) \vdash_{D_i}* \textrm{ for some } f \in F \\
+\textrm{Group all \textit{equivalent states} together.} \\
+\quad \textrm{Two states $p,q \in Q$ are equivalent iff } \forall z \in \Sigma*: (q,z) \in A_{D_i} \iff (p,z) \in A_{D_i} \\
+\end{array}
+\]
+
+\textbf{Option 2} is to check if the intersection of $D_1$ and $D_2$'s complement is $\emptyset$ and the intersection of $D_1$'s complement and $D_2$ is $\emptyset$. More formally:
 
 \[
 \begin{array}{lcr}
@@ -51,16 +63,16 @@ Where $F_{1\cap 2}$ is the set of end states $(f_1,f_2)$ where $f_1 \in F_1$ and
 
 \item \textbf{2e} The following algorithm will determine if $L(G) = \emptyset$ for a given CFG $G = (V,\Sigma, R, S)$:
 
-
-\begin{enumerate}
-\item Mark each terminal symbol in $G$ 
-\item Do: 
-\begin{enumerate}
-\item Mark any symbol A where there is a rule in G such that $A \rightarrow w_1w_2...w_k$ where each symbol in $w_1w_2...w_k$ has already been marked.
-\end{enumerate}
- Until no new symbols get marked.
-\item If S is not marked: accept. Else: reject.
-\end{enumerate}
+\[
+\begin{array}{l}
+\textrm{Mark each terminal symbol in }G \\
+\textrm{Do:} \\
+\quad \textrm{Mark any symbol $A$ where there is a rule in $G$ such that }A \rightarrow w_1w_2...w_k \\
+\quad \textrm{ where each symbol in $w_1w_2...w_k$ has already been marked.} \\
+\textrm{Until no new symbols get marked.} \\
+\textrm{If S is not marked: accept. Else: reject.}
+\end{array}
+\]
 
 \item \textbf{2f} The following algorithm will determine if $(G,w) \in MemberCFL$, that is,
 
