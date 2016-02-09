@@ -60,7 +60,17 @@ Give two reductions to show that PTM is neither r.e.\ nor co-r.e.
     as the set of all TMs which run with an explicit polynomial-time clock which shuts the TM off
     when the clock expires.]
 
-{\bf Answer by:} \quad {\bf with edits by:}
+\begin{proof}
+  Let $R$ be the set of turing machines $M_n^c$, for each pair of numbers $(n, c)$. On input $x$, $M_n^c$ will run the $n^{th}$ turing machine for $c|x|^c$ steps on input $x$. If the $n^{th}$ turing machine accepts in $\leq c|x|^c$ steps, $M_n^c$ will accept, otherwise $M_n^c$ will halt and reject.
+
+  Suppose that each $M_n^c$ somehow embeds the pair $(n,c)$ in the machine in a way that is easy to extract (e.g. maybe the state table starts with the pair $(n,c)$, and those states are never used in the transition function). Then $R$ is recursive, since we can extract $(n, c)$ from the definition of the machine, then generate $M_n^c$ and see if the two are same.
+
+  $R \subseteq$ PTM, since the turing machine $M_n^c$ will always halt in polynomial time on any input.
+
+  For each $f \in F(\p)$, there exists an $M_i \in R$ that computes $f$. Since $f$ is in $F(\p)$, $f$ is computable by a turing machine in polynomial time. That is, there exists a machine $M$ and a $c$ such that for all inputs of length $n$, $L(f) = f$ and $M$ always halts in $\leq cn^c$ steps. Since our language generates all such pairs of $M$s and $c$s, each $f$ must have a corresponding pair in the language.
+\end{proof}
+
+{\bf Answer by: Bruce Spang} \quad {\bf with edits by:}
 
 \end{enumerate}
 
