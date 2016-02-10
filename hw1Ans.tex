@@ -12,12 +12,28 @@
 correspondence between $\N\times\N$ and $\N$:
 \[ P(i,j) \quad\mapsto\quad {(i+j)(i+j+1)\over 2} + i\]
 
-{\bf Answer by:} \quad {\bf with edits by:}
+{\bf Answer by: Brendan Teich} \quad {\bf with edits by:}\\
+To show the 1:1 correspondence we must show that the function is both 1:1 and onto. \\
+\textit{\textbf{Lemma}}: For a fixed value k, P(i,j) is a 1:1 correspondence from$\{(i,j) | i+j = k\}$ to the set $[\frac{k^2 + k}{2}, ...,  \frac{k^2 + k}{2} + k]$ \\
+\textbf{PF}: Fix $(i+j) = k$ for a constant $k$.
+\[(i+j) = k \implies j=k-i \text{ and } P(0,k) = \frac{k(k+1)}{2}+ i = \frac{k^2 + k}{2} + i\]
+The above combined with the fact that $(i+j) = k \implies i \in [0,..., k]$ shows that  P(i,j) is a 1:1 correspondence from$\{(i,j) | i+j = k\}$ to the set $[\frac{k^2 + k}{2}, ...,  \frac{k^2 + k}{2} + k]$  $\square$
+
+We can then prove that the function is a one-to-one correspondence to the Natural numbers using induction on k with the hypothesis that P(i,j) is a 1:1 correspondence from\\ $\{(i,j) | i+j \leq k\}$ to set of natural numbers $[0 ,..., \frac{k^2 + k}{2} + k]$.  
+
+Base Case: $(i+j)=k=0$ \\
+The only possible tuple here is (0,0) and P(0,0) = 0, so our hypothesis holds thus far. 
+
+Given k, the values of P(i,j) for a fixed $(i+j) = k+1$ are then $\frac{(k+1)(k+2)}{2}+ i = \frac{k^2 + 3k + 2}{2} + i = \frac{k^2 + k}{2} + k + i + 1$.
+The largest P(i,j) for $i+j=k$ occurs at $(i=k, j=0)$ with the value  $\frac{k^2 + k}{2} + k$ and the smallest value for $k+1$ occurs at $i=0$ with value $\frac{k^2 + k}{2} + k + 1$. Combining this with our Lemma, we get that P(i,j) is a 1:1 correspondence from $\{(i,j) | i+j \leq k\}$ to the set of natural numbers $[0,...,  \frac{(k+1)^2 + (k+1)}{2} + (k+1)]$, which proves our inductive hypothesis, so P(i,j) is a 1:1 correspondence between $\N\times\N$ and $\N$.
 
 \item Construct a simple, easy to compute 1:1 and onto map, $\zeta$, from the set of binary strings
   to the naturals, i.e., $\zeta: \set{0,1}^\star\bijection\N$.
 
-{\bf Answer by:} \quad {\bf with edits by:}
+{\bf Answer by: Brendan Teich} \quad {\bf with edits by:}\\
+One such construction is to append a 1 to the front of any binary string w, and subtract 1.  (Or equivalently, convert w to its binary value, add $2^{|w|}$, and subtract 1.)  The empty string then maps to 0, "0" maps to 1, "1" maps to 2, "00" maps to 3, and so on.
+
+This mapping is one-to-one since no two unique strings of the same length can map to the same value as they are both increased by the same amount ($2^{|w|} - 1$).  No two strings of differing lengths can map to the same value either as a binary string of length n can only represent the values from 0 to $2^n -1$, so a string of length n can be mapped to values in the set $[2^n - 1, ..., 2^{n+1}-2]$ and a string of length n+1 would instead be mapped to a value in the set $[2^{n+1} - 1, ..., 2^{n+2}-2]$. From these two sets we can also see that the mapping is onto as the set for strings of length n+1 picks up exactly where the set of strings for length n left off.
 
 \end{enumerate}
 
