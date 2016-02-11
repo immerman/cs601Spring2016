@@ -1,0 +1,64 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}                   
+\hwstyle
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Homework 6} \hfill 
+{Due in class Thr, Feb. 11, 2016}}
+\addtocounter{section}{6}
+
+Please finish writing up solutions to any homeworks that you volunteered to do, but haven't done
+yet.
+
+Please read the posted notes for lectures 6 and 7 and come in with any questions you may have.
+
+
+This hw concerns the Arithmetic Hierarchy, which is at the top
+of the  World-of-Computability-and-Complexity diagram.  We say that a set
+of natural numbers, $S$, is an element of $\Sigma_k$ iff there is a
+ptime predicate $\phi$, such that,
+\[ S \qe \bigset{n}{\exists x_1\forall x_2 \cdots Q_k
+x_k(\phi(n,x_1,\ldots,x_k))},\]
+here $Q_k$ is $\forall$ if $k$ is even and $\exists$ if $k$ is odd.
+Similarly, $S$ is an element of $\Pi_k$ iff,
+\[ S \qe \bigset{n}{\forall x_1\exists x_2 \cdots Q'_k
+x_k(\psi(n,x_1,\ldots,x_k))},\]
+for some ptime predicate $\psi$.  Here $Q'_k$ is $\forall$ if
+$k$ is odd and $\exists$ if $k$ is even. 
+
+
+\begin{enumerate}
+\item Prove that \quad r.e. = $\Sigma_1$.
+\item Prove that \quad co-r.e. = $\Pi_1$.
+
+\vspace*{.1in}
+
+
+Define the Arithmetic Hierarchy to be $\displaystyle
+\bigcup_{k=1}^\infty \Sigma_k$.
+
+
+Classify the following sets by writing a  formula that
+places them as low as you can in the arithmetic hierarchy.  
+You do not have to prove that they cannot be placed in a lower class,
+but do your best.  
+
+For example,  
+TOTAL  =  $\bigset{n}{M_n\mbox{ halts on all inputs}}$
+is $\Pi_2$ because it can be written as
+\[ \mbox{TOTAL} \qe \bigset{n}{\forall x\exists
+z(\mbox{COMP}(n,x,L(z),R(z)))}\; .\]
+(Here COMP$(n,x,c,y)$ is the ptime predicate meaning that $c$ is a complete halting computation of TM $M_n$
+on input $x$ and its output is $y$.)
+
+
+
+
+\item  EMPTY = $\bigset{n}{W_n=\emptyset}$ .
+\item FINITE = $\bigset{n}{W_n\mbox{ is finite}}$ 
+\item PTM  = $\bigset{M_i}{\exists c \forall n(\mbox{ TM $M_i$ runs in time $cn^c$ on all inputs of length $n$}
+  )}$.
+\end{enumerate}
+\end{document}
+
