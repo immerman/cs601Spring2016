@@ -7,7 +7,7 @@
 {Spring 2016}}
 \addtocounter{section}{1}
 
-Prove that the following sets are r. e. complete:
+Prove that the following sets are r.e. complete:
 \begin{eqnarray*}
 A_{\text{TM}} &=& \bigset{(i, j)}{M_i(j) = 1} \\[2ex]
 \halt &=& \bigset{(n, m)}{M_n(m) \mbox{ halts}} \\[2ex]
@@ -15,45 +15,48 @@ A_{\text{TM}} &=& \bigset{(i, j)}{M_i(j) = 1} \\[2ex]
 \end{eqnarray*}
 
 \begin{enumerate}
-\item Show $A_{\text{TM}}$ is r. e. complete.
+\item Show $A_{\text{TM}}$ is r.e. complete.
 
-$A_{\text{TM}}$ is r. e., because on input $(i, j)$ we can simulate $M_i$ on input $j$, and accept if $M_i$ accepts.
+$A_{\text{TM}}$ is r.e., because on input $(i, j)$ we can simulate $M_i$ on input $j$, and accept if $M_i$ accepts.
 
-To show that $A_{\text{TM}}$ is r. e. hard, we reduce $K = \bigset{i}{M_i(i) = 1}$ to $A_{\text{TM}}$. As $K$ is r. e. hard, this shows $A_{\text{TM}}$ is r. e. hard as well.
+To show that $A_{\text{TM}}$ is r.e. hard, we reduce $K = \bigset{i}{M_i(i) = 1}$ to $A_{\text{TM}}$. As $K$ is r.e. hard, this shows $A_{\text{TM}}$ is r.e. hard as well.
 
 Let the reduction $f$ be the function such that $f(n) = (n, n)$.
 
 Then $n \in K \iff M_n(n) = 1 \iff (n, n) \in A_{\text{TM}} \iff f(n) \in A_{\text{TM}}$.
 
-As $A_{\text{TM}}$ is r. e. and r. e. hard, it is r. e. complete.
+As $A_{\text{TM}}$ is r.e. and r.e. hard, it is r.e. complete.
 
 {\bf Answer by: Larkin Flodin} \quad {\bf with edits by:}
 
-\item Show $\halt$ is r. e. complete.
+\item Show $\halt$ is r.e. complete.
 
-$\halt$ is r. e., because on input $(i, j)$ we can simulate $M_i(j)$ and accept if $M_i$ ever halts.
+$\halt$ is r.e., because on input $(i, j)$ we can simulate $M_i(j)$ and accept if $M_i$ ever halts.
 
-For r. e. hardness, we reduce $K$ to $\halt$. Let $f(n) = (g(n), 0)$, where $g(n)$ is the index of the machine $M_{g(n)}$ that ignores its input, and simulates $M_n(n)$. If $M_n$ accepts, then $M_{g(n)}$ halts, otherwise if $M_n$ halts without accepting, $M_{g(n)}$ goes into an infinite loop.
+For r.e. hardness, we reduce $K$ to $\halt$. Let $f(n) = (g(n), 0)$, where $g(n)$ is the index of the machine $M_{g(n)}$ that ignores its input, and simulates $M_n(n)$. If $M_n$ accepts, then $M_{g(n)}$ halts, otherwise if $M_n$ halts without accepting, $M_{g(n)}$ goes into an infinite loop.
 
 Then $n \in K \iff M_n(n) = 1 \iff M_{g(n)} \textrm{ halts on all inputs} \iff M_{g(n)}(0) \textrm{ halts} \iff (g(n), 0) \in \halt \iff f(n) \in \halt$.
 
-As $\halt$ is r. e. and r. e. hard, it is r. e. complete.
+As $\halt$ is r.e. and r.e. hard, it is r.e. complete.
 
 {\bf Answer by: Larkin Flodin} \quad {\bf with edits by:}
 
-\item Show $\ov{\notfull}$ is r. e. complete.
+\item Show $\ov{\notfull}$ is r.e. complete.
 
-$\ov{\notfull}$ is r. e., because on input $n$ we can dovetail the simulation of $M_n$ on all possible inputs, simulating one step of computation on the first input, then two steps on the first two inputs, and so on. If $M_n$ ever accepts an input, then accept.
+{\bf Answer by: Larkin Flodin} \quad {\bf with edits by: Neil}
 
-We reduce $\ov{\notfull}$ to $A_{0, 17} = \bigset{i}{M_i(0) = 17}$ to show r. e. hardness.
+$\ov{\notfull}$ is r.e., because on input $n$ we can dovetail the simulation of $M_n$ on all possible inputs, simulating one step of computation on the first input, then two steps on the first two inputs, and so on. If $M_n$ ever accepts an input, then accept.
+
+We reduce $A_{0, 17}$ to $\ov{\notfull}$ to show r.e. hardness.  Recall that  $A_{0, 17} =
+\bigset{i}{M_i(0) = 17}$. 
 
 Let $f$ be the function such that $f(n)$ is the index of the machine that ignores its input, and simulates $M_n(0)$. If $M_n$ outputs 17, then $M_{f(n)}$ accepts, otherwise $M_{f(n)}$ rejects.
 
 Then $n \in A_{0, 17} \iff M_n(0) = 17 \iff \exists x, M_{f(n)}(x) = 1 \iff W_{f(n)} \neq \emptyset \iff f(n) \in \ov{\notfull}$.
 
-As $\ov{\notfull}$ is r. e. and r. e. hard, it is r. e. complete.
+As $\ov{\notfull}$ is r.e. and r.e. hard, it is r.e. complete.
 
-{\bf Answer by: Larkin Flodin} \quad {\bf with edits by:}
+
 
 \end{enumerate}
 
