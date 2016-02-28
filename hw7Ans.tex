@@ -1,0 +1,45 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}                   
+\hwstyle
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Homework 7} \hfill 
+{Due in class Thr, Feb. 18, 2016}}
+\addtocounter{section}{7}
+
+Please make sure that you have completed the solutions to the homework problems that you are
+responsible for.   To start getting ready for the midterm, March 1, it would be good for everyone to
+go over all these solutions and make sure that you understand them.  (Helping with corrections and
+proof reading would be appreciated.)
+
+Show that the following three problems are all NL complete:
+
+\textbf{Answers by: Dan Saunders}
+
+\begin{enumerate}
+\item  EMPTY-DFA $ = \bigset{D}{D \mbox{ a deterministic finite automaton and } \sel(D) =
+  \emptyset}$ 
+
+To show that $EMPTY-DFA$ is $NL$-complete, we must show that $EMPTY-DFA$ is both in $NL$, and for all languages $A$ $\in$ $NL$, $A$ $\leq$ $EMPTY-DFA$. We provide a reduction from $REACH$, an $NL$-complete language itself, to $\overline{EMPTY-DFA}$, taking advantage of the fact that $NL = coNL$, which will prove both of these conditions. The reduction will take instances of $REACH$ into instances of $\overline{EMPTY-DFA}$, and is as follows: 
+
+We let node $s$ be the start state of the graph instance of $\overline{EMPTY-DFA}$, and $t$ the only final state in the graph. The vertices and edges of the $REACH$ instance are preserved in the graph of the instance of $\overline{EMPTY-DFA}$. Now, clearly this reduction takes space logarithmic in the size of the $REACH$ instance, as we are simply copying over the graph to the instance of $\overline{EMPTY-DFA}$. Now, this reduction will take tuples $<G, s, t>$ to a $DFA$ $D$ such that $L(D) \neq \emptyset$ iff there exists a path from $s$ to $t$ in $G$, and therefore, $REACH \leq \overline{EMPTY-DFA} \implies REACH \leq EMPTY-DFA \implies EMPTY-DFA$ is $NL$-complete, given that we may use the $NL REACH$ algorithm to decide $EMPTY-DFA$.
+
+\vspace*{.1in}
+
+\item EMPTY-NFA $ = \bigset{N}{N \mbox{ a nondeterministic finite automaton and } \sel(N) =\emptyset}$
+
+This construction is exactly analogous to the first problem, and so we may immediately conclude that $EMPTY-NFA$ is $NL$-complete.
+
+\vspace*{.1in}
+
+\item EQUAL-DFA $ =  \bigset{(D_1,D_2)}{D_1,D_2 \mbox{ DFAs};\;\sel(D_1) =\sel(D_2)}$
+
+It is clear that $< D_1$, $D_2 >$ is in $EQUAL-DFA$ if and only if the symmetric difference of $D_1$, $D_2$ is in $EMPTY-DFA$, and so, $EQUAL-DFA \ in NL$, since $EMPTY-DFA \in NL$ and $EQUAL-DFA \leq EMPTY-DFA$.
+
+We now show that $EQUAL-DFA$ is $NL$-hard by reducing the $NL$-complete language $EMPTY-DFA$ to $EQUAL-DFA$ as follows:
+
+The reduction takes some $DFA$ $D$ to the tuple $< D, D'>$, where $L(D') = \emptyset$, therefore, $D \in EMPTY-DFA$ if and only if $<D, D'> \in EQUAL-DFA$. We conclude that $EQUAL-DFA$ is $NL$-complete.
+
+\end{enumerate}
+\end{document}
