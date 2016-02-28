@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}                   
+\hwstyle
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Homework 8} \hfill 
+{Due in class Tue, Feb. 23, 2016}}
+\addtocounter{section}{8}
+
+In the following problems, you may assume that QSAT is PSPACE complete and MCVP is P complete. (Both
+of these are proved in Lecture 10.)
+
+\begin{enumerate}
+\item Prove that EMPTY-CFL is P-complete.  Note that we already
+proved this was in P in Hw 4.  I suggest that you reduce MCVP to
+EMPTY-CFL.  
+
+\item Let $S_2  \se \bigset{(a,w,1^r)}{M_a(w) =1 \mbox{ using at most $r$ work-tape cells.}}$
+Prove that $S_2$ is PSPACE complete.
+
+\item  Let $S_3 \se \bigset{(G,\phi)}{\mbox{$G$ a graph, $\phi$ a first-order formula, $G\models
+    \phi$}}$   Prove that $S_3$ is PSPACE complete.  [I suggest you reduce QSAT to $S_3$.]
+
+
+\end{enumerate}
+\end{document}
+

@@ -1,0 +1,169 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}                   
+\hwstyle
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Homework 2} \hfill 
+{Due in class Tue, Jan. 26, 2016}}
+\addtocounter{section}{2}
+
+\begin{enumerate}
+\item  Let $A_{\text{TM}} = \bigset{(i,j)}{M_i(j) = 1}$.  
+
+\begin{enumerate}
+   \item Show directly from the definition of r.e., that $A_{\text{TM}}$ is r.e., i.e., that 
+         $p_{A_{\text{TM}}}$ is a partial recursive function.  
+       
+{\bf Answer by: Sophie Koffler} \quad {\bf with edits by: Neil}\\
+  
+         \textbf{Proof}: 
+         \\To show that $A_{\text{TM}}$ is r.e., we need to show that there exists a TM, $M_{A}$, that computes  the partial(characteristic) recursive function, $p_{A_{\text{TM}}}$, for $A_{\text{TM}}$. 
+         \\We need to show that $\forall w \in \Sigma_{0}^{*} (p_{A_{\text{TM}}}(w) = M_{A}(w))$ where $w$ is the binary encoding of a pair of natural numbers $i$ and $j$, which can be decoded using the left and right pairing functions respectively, as defined in class.
+         \\Let $M_{A}$ be the TM that computes $p_{A_{\text{TM}}}(w) = p_{A_{\text{TM}}}(L(w),R(w)) = p_{A_{\text{TM}}}(i,j)$.
+		  \begin{center}	 
+         \[ p_{A_{\text{TM}}}(i,j) = 
+         \left \{
+         \begin{tabular}{cc}
+         1 & if $(i,j) \in A_{\text{TM}}$  \\
+         $\nearrow$ & otherwise \\
+         \end{tabular}
+         \right.
+         \]
+	    \end{center}
+          More specifically, 
+         \begin{center}
+          \[ p_{A_{\text{TM}}}(i,j) = 
+          \left \{
+          \begin{tabular}{cc}
+          1 & if $M_{i}(j)=1$  \\
+          $\nearrow$  & otherwise \\
+          \end{tabular}
+          \right.
+          \]
+        \end{center}
+        
+         On input X, $M_{A}$ operates as follows:
+         \begin{description}
+         	\item[1] Verify X is an encoding of a pair of natural numbers, and decode the numbers, i and j using the left and right pairing functions respectively. 
+         	\\If X is not valid input reject.  [{\color{blue} Note from Neil: While correct, this is not
+                necessary because we assume throughout that every input, $X$, is a natural number
+                and thus, since $X = P(L(X),R(X))$, also a pair of natural numbers.}]
+         	\item[2] Run TM $M_{i}$ on input $j$:
+			         	if ($M_{i}(j)$==1) return 1
+			         	else diverge
+         \end{description}
+        Since we have constructed a TM $M_{A}$ that computes $p_{A_{\text{TM}}}$, we have shown that $A_{\text{TM}}$ is r.e. $\Box$ 
+         
+   \item Show from the fact that $\ov{K}$ is not r.e., that $A_{\text{TM}}$ is not recursive.  
+   
+{\bf Answer by: Sophie Koffler} \quad {\bf with edits by: Neil }\\
+
+     \textbf{Proof}: Assume, for the sake of contradiction, that $A_{\text{TM}}$ is recursive.  Therefore we have TM, $M_{A}$, that
+     computes $\chi_{A_{\text{TM}}}$, the characteristic function of $A_{\text{TM}}$, which is defined as follows: 
+      \begin{center}	 
+       	\[ \chi_{A_{\text{TM}}}(i,j) = 
+       	\left \{
+       	\begin{tabular}{cc}
+       	1 & if (i,j) $\in A_{\text{TM}}$  \\
+       	0 & otherwise \\
+       	\end{tabular}
+       	\right.
+       	\]
+       \end{center}
+       
+       This means we can construct a TM, $M_{{K}}$, to compute the characteristic function, $\chi_{{K}}$ by modifying $M_{A}$.
+       
+       Let $M_{{K}}$ be the TM that computes $\chi_{{K}}$.
+       
+       On input $i$, $M_{{K}}$ operates as follows:
+       \begin{description}
+       	\item[1] Run TM $M_A$ on input $(i,i)$:
+       	\\if ($M_{i}(i)$==1) return 1
+       	\\else return 0
+       \end{description}
+       
+       Therefore, $M_{{K}}$, calculates $\chi_{{K}}$ where
+       
+      \begin{center}	 
+      	\[ \chi_{{K}}(i) = 
+      	\left \{
+      	\begin{tabular}{cc}
+      	1 & if $(i,i) \in A_{\text{TM}}$ \\
+      	0 & otherwise \\
+      	\end{tabular}
+      	\right. 
+      	\]
+      \end{center}
+      
+      Which is equal to 
+      \begin{center}	 
+      	\[ \chi_{{K}}(i,i) = 
+      	\left \{
+      	\begin{tabular}{cc}
+      	1 & $M_{i}(i)=1$ \\
+      	0 & otherwise \\
+      	\end{tabular}
+      	\right. 
+      	\]
+      \end{center}
+       
+      By constructing TM $M_{A}$ that
+      computes $\chi_{A_{\text{TM}}}$, we have shown the existence of a TM $M_{{K}}$ that calculates $\chi_{{K}}$. 
+      
+      Therefore $K$ is recursive. But we previously proved that $K$ is not recursive.
+
+      $\Rightarrow\Leftarrow$
+
+
+      Therefore,  $A_{\text{TM}}$ is not recursive. $\Box$
+     
+\end{enumerate}
+
+\item (Where the name ``recursively enumerable'' comes from.)
+  \begin{enumerate}
+   \item Show that every finite set, $F$, is r.e.
+   
+    \textbf{Proof}: Let $M_\text{F}$ be the TM that computes the characteristic function $\chi_F$.
+    
+    $M_\text{F}$ on input $w$ operates as follows: 
+    \\If $w \in F$: return 1
+    \\		 else return 0
+    
+   The TM, $M_{\text{F}}$ keeps a table for all the elements of the finite set, $F$.  It accepts
+   everything in its table and rejects otherwise.
+
+    Therefore, we have shown that every finite set, $F$, is recursive. 
+    Thus every finite set is also r.e. 
+$\Box$
+    
+    
+   \item Suppose that $W_i$ is infinite.  Given $M_i$, show how to build a TM computing a total
+     recursive function, $f_i$, such that $f_i$ enumerates $W_i$, i.e., 
+\[ W_i \qe \set{f_i(0), f_i(1), f_i(2), \ldots }\]
+
+		\textbf{Proof}: Since we know that $W_i = \sel(M_i)$ is infinite, find some element,
+                $a_0 \in W_i$.
+
+To compute $f_i(x)$ we do the following:  Simulate $M_i(L(x))$ for $R(x)$ steps.  If in this amount
+of time, $M_i(L(x))$ halts and outputs $1$, then $\Return(L(x))$, \Else $\Return(a_0)$.
+
+Observe that $f_i$ is total -- in fact in runs in linear time -- and $f_i(\N) = W_i$.  The range of
+$f_i$ contains only elements of $W_i$.  If $a\in W_i$, then $M_i(a) = 1$.  Let $t_a$ be the number
+of steps that $M_i(a)$ takes.  Then $f_i(P(a,t_a))= a$.
+
+
+\vspace*{.1in}
+
+
+
+Can you always construct $f_i$ so that it is a 1:1 function?
+
+Yes.  To do this, on input $x$, we must dovetail $M_i$ on all possible inputs for longer and longer
+amounts of time, keeping track of each new element accepted: $a_0, a_1, \ldots, a_x$.  When we reach
+the $x$th accepted element, $a_x$, we return that element and halt.
+  \end{enumerate}
+
+\end{enumerate}
+
+\end{document}

@@ -12,11 +12,11 @@
 correspondence between $\N\times\N$ and $\N$:
 \[ P(i,j) \quad\mapsto\quad {(i+j)(i+j+1)\over 2} + i\]
 
-{\bf Answer by: Brendan Teich} \quad {\bf with edits by:}\\
+{\bf Answer by: Brendan Teich} \quad {\bf with edits by: Neil}\\
 To show the 1:1 correspondence we must show that the function is both 1:1 and onto. \\
 \textit{\textbf{Lemma}}: For a fixed value k, P(i,j) is a 1:1 correspondence from$\{(i,j) | i+j = k\}$ to the set $[\frac{k^2 + k}{2}, ...,  \frac{k^2 + k}{2} + k]$ \\
 \textbf{PF}: Fix $(i+j) = k$ for a constant $k$.
-\[(i+j) = k \implies j=k-i \text{ and } P(0,k) = \frac{k(k+1)}{2}+ i = \frac{k^2 + k}{2} + i\]
+\[(i+j) = k \implies j=k-i \text{ and } P(i,j) = \frac{k(k+1)}{2}+ i = \frac{k^2 + k}{2} + i\]
 The above combined with the fact that $(i+j) = k \implies i \in [0,..., k]$ shows that  P(i,j) is a 1:1 correspondence from$\{(i,j) | i+j = k\}$ to the set $[\frac{k^2 + k}{2}, ...,  \frac{k^2 + k}{2} + k]$  $\square$
 
 We can then prove that the function is a one-to-one correspondence to the Natural numbers using induction on k with the hypothesis that P(i,j) is a 1:1 correspondence from\\ $\{(i,j) | i+j \leq k\}$ to set of natural numbers $[0 ,..., \frac{k^2 + k}{2} + k]$.  

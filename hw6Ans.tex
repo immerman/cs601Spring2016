@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}                   
+\usepackage{algorithmic}
+\hwstyle
+\begin{document}
+\noindent\framebox[\textwidth]{
+  {\normalsize CS601:} \hfill {\bf Answers to hw6} \hfill 
+  {Spring 2016}}
+\addtocounter{section}{1}
+
+% Some time-saving macros:
+\newcommand{\re}{\text{r.e.}}
+\newcommand{\cre}{\text{co-r.e.}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\lang}{\mathcal{L}}
+\newcommand{\setb}[2]{\left\{ #1 ~|~ #2 \right\}}
+
+\begin{enumerate}
+
+  \item Recall the definition of r.e.:
+    $\re = \setb{W_i}{i \in \nat} = \setb{\lang(M_i)}{i \in \nat}$.
+
+    \begin{proof}
+      Prove that $\re = \Sigma_1$ (that is, that
+      $\re = \setb{S = \setb{n}{\exists x_1.~\phi(n, x_1)}}{\phi \in P}$).
+      
+      \begin{enumerate}
+        \item $\re \subseteq \Sigma_1$:
+
+          Consider $W_i = \lang(M_i) = \setb{n}{M_i(n)=1}$.
+
+          For each r.e. set $W_i$, we need to find a function $\phi_i \in P$.
+
+          If $M_i(n) = 1$, then there exists a \emph{computation} $c$, a
+          sequence of TM states which describes the process of $M_i$ computing
+          the result $1$ from $n$. The polynomial-time function that
+          determines whether $c$ is this computation is $\text{COMP}(i,n,c,1)$.
+          Therefore, $W_i = \setb{n}{\exists x_1.~\phi_i(n, x_1)}$, where
+          $\phi_i(n, c) = \text{COMP}(i, n, c, 1)$.
+
+        \item $\Sigma_1 \subseteq \re$:
+
+          The following r.e. algorithm defines the set
+          $S = \setb{n}{\exists x.~\phi(n, x)}$, for any $\phi \in P$:
+
+          \begin{algorithmic}
+            \STATE input $n$
+            \FOR{$x \gets 1$ to $\infty$}
+              \IF{$\phi(n, x)$}
+                \STATE accept
+              \ENDIF
+            \ENDFOR
+          \end{algorithmic}
+
+      \end{enumerate}
+    \end{proof}
+
+    {\bf Answer by: Adam Nelson}
+
+  \item $\cre = \Pi_1$ is a simple corollary of $\re = \Sigma_1$: For
+    $\cre \subseteq \Pi_1$, note that $\bar{W_i} = \setb{n}
+    {\forall c.~\lnot\text{COMP}(i,n,c,1)}$, and, for $\Pi_1 \subseteq \cre$,
+    note that changing the if-statement in problem 1 part (b) to
+    \begin{algorithmic}
+      \IF{$\lnot\phi(n, x)$}
+        \STATE reject
+      \ENDIF
+    \end{algorithmic}
+    makes the algorithm co-r.e.
+
+    {\bf Answer by: Adam Nelson}
+
+  \item $\text{EMPTY} = \setb{n}{W_n = \emptyset}$ is in $\Pi_1$:
+
+    $\text{EMPTY} = \setb{n}{\forall x c.~\lnot\text{COMP}(n,x,c,1)}$
+
+    {\bf Answer by: Adam Nelson}
+
+  \item $\text{FINITE} = \setb{n}{W_n~\text{is finite}}$ is in $\Sigma_2$:
+
+    If a TM is finite, then there must be maximum length, $l$, of string that
+    it accepts.
+
+    $\text{FINITE} = \setb{n}{\exists l~\forall x c.~\lnot\text{COMP}(n,x,c,1)
+      \lor \left|x\right| \le l}$
+
+    {\bf Answer by: Adam Nelson}
+
+  \item $\text{PTM} = \setb{n}{M_n~\text{runs in polynomial time for all inputs}}$
+    is in $\Sigma_2$:
+
+    For our $\phi$, we use the function $\text{Halt}(i,x,n)$, which runs $M_i$
+    with input $x$ for $n$ cycles, then returns $1$ if it has halted by this
+    point, or $0$ otherwise. This runs in polynomial time on $x$ if
+    $n = c\left|x\right|^c$ for some constant $c$.
+
+    $\text{PTM} = \setb{n}{\exists c.~\forall x l.~\left|x\right| \ge l 
+      \lor \text{Halt}(n,x,cl^c)}$
+
+    {\bf Answer by: Adam Nelson}
+
+\end{enumerate}
+
+\end{document}
+
