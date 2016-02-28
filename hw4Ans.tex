@@ -12,27 +12,35 @@
 \item Prove that if $S$ is r.e. hard or co-r.e. hard, then $S$ is not recursive. (From now on, the main way we will
 prove that a problem is not recursive, i.e., not computable, is to show that it is r.e. hard or co-r.e. hard.)
 
-\begin{itemize}
 
-\item \textbf{1)} Let a set $S$ be r.e. hard, and assume for contradiction that $S$ is recursive. Then for all sets $T \in$ r.e., $T \leq S$. But, we know that the diagonal set $K \in$ r.e., and therefore, $K \leq S$. We have already shown that $K$ is not recursive, and since $S$ is "at least as hard as" $K$, $S$ cannot be either. Similarly, if a set $S$ is co-r.e. hard, it cannot be recursive, as we find that $\bar{K} \leq S$, and $\bar{K}$ is therefore recursive, a contradiction on the assumption that $S$ is. So, if $S$ is r.e. hard or co-r.e. hard, it cannot be recursive.
+{\bf Answer by: Dan Saunders} \quad {\bf with edits by: Neil}
 
-\end{itemize}
+\textbf{1)} Let a set $S$ be r.e. hard.
+  Then for all sets $T \in$ r.e., $T \leq S$. But, we know that the diagonal set $K \in$
+  r.e., and therefore, $K \leq S$. We have already shown that $K$ is not recursive.
+  Therefore, by the Fundamental Theorem of Reductions (Lecture 4), 
+  $S$ is not recursive  either. 
+  
+  Similarly, if a set $S$ is co-r.e. hard, it
+  cannot be recursive, as we find that $\ov{K} \leq S$, and since $\ov{K}$ is not recursive,
+  neither is $S$.
 
-{\bf Answer by: Dan Saunders} \quad {\bf with edits by:}
 
-\item Prove Theorem 4.2 from the posted notes for Lecture 4.
+\item Prove Theorem 4.2 from the posted notes for Lecture 4.  The following 6 sets are all in P.
 \[
 \begin{array}{lrcl}
 \textbf{2a.}&\mbox{{\rm EmptyNFA}} &=& \bigset{N}{N \mbox{ is an NFA};\; \sel(N) = \emptyset} \\[1ex]
 \textbf{2b.}&\Sigma^\star\mbox{{\rm DFA}} &=& \bigset{D}{D\mbox{ is a DFA};\;
   \sel(D) = \Sigma^\star}\\[1ex]
-\textbf{2c.}&\mbox{{\rm MemberNFA}} &=& \bigset{\angle{N,w}}{N \mbox{ is an NFA};\; w\in \sel(N)}\\[1ex]
-\textbf{2d.}&\mbox{{\rm EqualDFA}} &=& \bigset{\angle{D_1,D_2}}{D_1,D_2 \mbox{ DFAs};\;\sel(D_1) =\sel(D_2)}\\[1ex]
+\textbf{2c.}&\mbox{{\rm MemberNFA}} &=& \bigset{(N,w)}{N \mbox{ is an NFA};\; w\in \sel(N)}\\[1ex]
+\textbf{2d.}&\mbox{{\rm EqualDFA}} &=& \bigset{(D_1,D_2)}{D_1,D_2 \mbox{ DFAs};\;\sel(D_1) =\sel(D_2)}\\[1ex]
 \textbf{2e.}&\mbox{{\rm EmptyCFL}} &=& \bigset{G}{G \mbox{ is a CFG};\; \sel(G) =
   \emptyset} \\[1ex] 
-\textbf{2f.}&\mbox{{\rm MemberCFL}} &=& \bigset{\angle{G,w}}{G \mbox{ is a CFG};\;w\in\sel(G)}\\
+\textbf{2f.}&\mbox{{\rm MemberCFL}} &=& \bigset{(G,w)}{G \mbox{ is a CFG};\;w\in\sel(G)}\\
 \end{array}
 \]
+
+{\bf Answer by: John Lalor} \quad {\bf with edits by: Neil}
 
 \begin{itemize}
 
@@ -62,7 +70,11 @@ This search operates in time linear in the number of nodes in the NFA, and so we
 
 \end{enumerate}
 
-Since this search operates in linear time with respect to the number of nodes in the DFA, we have shown that $\Sigma^\star\mbox{{\rm DFA}}$ $\in$ $P$.
+Since this search operates in linear time with respect to the number of nodes in the DFA, we have
+shown that $\Sigma^\star\mbox{{\rm DFA}}$ $\in$ $P$.  [{\color{blue} Note from Neil: another solution
+    is to let $\ov{D}$ be the modification of $D$ in which the final and non-final states are
+    switched.  Then $D\in \Sigma^\star\mbox{{\rm DFA}}$ iff $\ov{D} \in $ EmptyNFA, so by 2a., 
+   $\Sigma^\star\mbox{{\rm DFA}}\in \p$.}]
 
 \item \textbf{2c)} Let $N$ be an arbitrary NFA, and let $w$ be an arbitrary input to $N$. Then, the following algorithm will check whether $w \in \sel(N)$:
 
@@ -76,23 +88,13 @@ Since this search operates in linear time with respect to the number of nodes in
 
 \end{enumerate}
 
-This algorithm is clearly linear in the length of the input $w$, and so MemberNFA $\in P$.
+This algorithm is clearly polynomial in the length of the input, $(N,w)$, and so MemberNFA $\in P$.
 
-\item \textbf{2d)} There are two algorithms that we can use to determine if two DFA are in EqualDFA. 
+\item \textbf{2d)} There are two algorithms that we can use to determine if a pair of DFAs is in EqualDFA. 
 
-\textbf{Option 1} is to convert both DFAs to their minimal representation, and then compare the resulting minimal represenations isomorphically to determine if they are equivalent. 
+\textbf{Option 1} is to convert both DFAs to their minimal representation, and then compare the
+resulting minimal represenations to see if they are identical.  
 
-In order to build the minimal representation, or standard automaton, for a DFA, use the following algorithm:
-
-\[
-\begin{array}{l}
-\textrm{Let $D_i = (Q, \Sigma, \delta, s, F)$ be a DFA} \\
-\textrm{Define a relation $A_{D_i} \subseteq K \times \Sigma*$ as:} \\
-\quad (q,w) \in A_{D_i} \iff (q,w) \vdash_{D_i}* \textrm{ for some } f \in F \\
-\textrm{Group all \textit{equivalent states} together.} \\
-\quad \textrm{Two states $p,q \in Q$ are equivalent iff } \forall z \in \Sigma*: (q,z) \in A_{D_i} \iff (p,z) \in A_{D_i} \\
-\end{array}
-\]
 
 \textbf{Option 2} is to check if the intersection of $D_1$ and $D_2$'s complement is $\emptyset$ and the intersection of $D_1$'s complement and $D_2$ is $\emptyset$. More formally:
 
@@ -103,15 +105,25 @@ L(\overline{D_1} \cap D_2) & = & \emptyset \\
 \end{array} 
 \]
 
-The intersection of two DFAs $D_1 = (Q_1, \Sigma_1, \delta_1, s_1, F_1)$ and $D_2 = (Q_1, \Sigma_2, \delta_2, s_2, F_2)$ is (assuming $\Sigma_1 = \Sigma_2: $
+The intersection of two DFAs $D_1 = (Q_1, \Sigma, \delta_1, s_1, F_1)$ and $D_2 = (Q_2, \Sigma,
+\delta_2, s_2, F_2)$  is
 
 \begin{equation*}
 D_{1\cap 2} = (Q_1 \times Q_2, \Sigma, \delta_{1\cap 2}, (s_1,s_2), F_{1\cap 2})
 \end{equation*}
 
-Where $F_{1\cap 2}$ is the set of end states $(f_1,f_2)$ where $f_1 \in F_1$ and $f_2 \in F_2$ and $\delta_{1\cap2}$ applies the partial transition functions from each original DFA to generate a new combined state. Once $D_1 \cap \overline{D_2}$ and $\overline{D_1} \cap D_2$ are generated, you can use EmptyNFA above to determine if $L(D_1 \cap \overline{D_2}) = \emptyset$ and $L(\overline{D_1} \cap D_2) = \emptyset$. If both are true, then $(D_1,D_2) \in EqualDFA$.
+Where $F_{1\cap 2}$ is the set of end states $(f_1,f_2)$ where $f_1 \in F_1$ and $f_2 \in F_2$ and
+$\delta_{1\cap2}$ applies the transition functions from each original DFA, componentwise, i.e.,
+\[ \delta_{1\cap2}((q_1,q_2),a) \quad \eqdef \quad (\delta_1(q_1,a), \delta_2(q_2,a))\; .\]
+Once $D_1 \cap \overline{D_2}$ and $\overline{D_1} \cap D_2$ are generated, you can use EmptyNFA
+above to determine if $L(D_1 \cap \overline{D_2}) = \emptyset$ and $L(\overline{D_1} \cap D_2) =
+\emptyset$. Both of these hold iff $(D_1,D_2) \in EqualDFA$.
 
-\item \textbf{2e)} The following algorithm will determine if $L(G) = \emptyset$ for a given CFG $G = (V,\Sigma, R, S)$:
+\item \textbf{2e)} 
+For a given CFG,  $G = (V,\Sigma, R, S)$ say that a non-terminal, $N$, is \emph{useful} if there is
+a derivation of a string of non-terminals, from $N$.  
+The following algorithm will determine if $L(G) = \emptyset$, by marking all the useful
+nonterminals.  Then $\sel(G) = \emptyset$ iff $S$ does not end up marked.
 
 \[
 \begin{array}{l}
@@ -130,24 +142,27 @@ Where $F_{1\cap 2}$ is the set of end states $(f_1,f_2)$ where $f_1 \in F_1$ and
 \{\langle G,w\rangle\ | G \in CFG, w \in L(G)\}
 \end{equation}
 
-for a given CFG $G = (V, \Sigma, R, S)$ and a given string $w$ with length $n = |w|$. 
+for a given CFG $G = (V, \Sigma, R, S)$ and a given string $w=w_1\cdots w_n$.
 
 \[
 \begin{array}{l}
 \textrm{Convert $G$ into its Chomsky Normal Form (CNF) representation, $G'$} \\ \\
-\textrm{Let $N[i,j]$ be the set of all symbols in $V$ that can derive in $G$ the string $x_i...x_j$, with $i < j$.} \\
+\textrm{Let $N[i,j]$ be the set of all symbols in $V\cup\Sigma$ that can derive the string
+  $w_i \ldots w_j$, with $i \leq j$.} \\[2ex]
+\textrm{The following dynamic programming algorithm computes $N[i,i+j]$, by induction on $j$:}\\[2ex]
 \textrm{for $i = 1$ to $n$ do}: N[i,i] = \{w_i\} \\
 \textrm{for $j = 1$ to $n-1$ do}: \\
 \quad \textrm{for $i = 1$ to $n-j$ do}: \\
 \quad\quad \textrm{for $k = 1$ to $i+j-1$ do}: \\
-\quad\quad\quad \textrm{if there is a rule} A \rightarrow BC \in R \textrm{where} B \in N[i,k] \textrm{and} C \in N[k+1,i+j]: \\
+\quad\quad\quad \textrm{if there is a rule} A \rightarrow BC \in R \textrm{ where } B \in N[i,k]
+\textrm{ and } C \in N[k+1,i+j]: \\
 \quad\quad\quad\quad \textrm{then add $A$ to} N[i, i+j]\\
 \textrm{if } S \in N[i,n] \textrm{: accept. Else: reject.} 
 \end{array}
 \]
 
 \end{itemize}
-{\bf Answer by: John Lalor} \quad {\bf with edits by:}
+
 
 \end{enumerate}
 
