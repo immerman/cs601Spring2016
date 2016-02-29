@@ -18,6 +18,8 @@ $=\bigset{M_i}{\exists c \forall n(\mbox{ TM $M_i$ runs in time $cn^c$ on all in
 That is, PTM is the set of TMs that run in polynomial time.
 Give two reductions to show that PTM is neither r.e.\ nor co-r.e.
 
+{\bf Answer by: Lite Ye} \quad {\bf with edits by:}
+
 \begin{proof}
   We are going to show PTM is neither r.e.\ nor co-r.e.\ by showing
   $\mathrm{K}\leq \mathrm{PTM}$ and $\overline{\mathrm{K}}\leq \mathrm{PTM}$.
@@ -32,7 +34,7 @@ Give two reductions to show that PTM is neither r.e.\ nor co-r.e.
   This program is in constant time if $i\in \mathrm{K}$. Otherwise it never halts. So $f_1(i)\in
   \mathrm{PTM}$ if and only if $i \in \mathrm{K}$. $\mathrm{K}\leq \mathrm{PTM}$.
   
-  For any $i$, $f_2(i)$ return a program that
+  For any $i$, $f_2(i)$ returns a program that
   \begin{center}
     \begin{algorithmic}
       \STATE $n \gets$ length of input
@@ -53,12 +55,14 @@ Give two reductions to show that PTM is neither r.e.\ nor co-r.e.
   Thus $\mathrm{K}$ is recursive, also a contradiction.
 \end{proof}
 
-{\bf Answer by: Lite Ye} \quad {\bf with edits by:}
+
 
 \item Show that there is a recursive set of TMs, $R \subseteq$ PTM, such that for all $f \in F(\p)$,
   there exists $M_i \in R$ such that the function computed by $M_i$ is $f$.  [Hint:  construct $R$
     as the set of all TMs which run with an explicit polynomial-time clock which shuts the TM off
     when the clock expires.]
+
+{\bf Answer by: Bruce Spang} \quad {\bf with edits by:}
 
 \begin{proof}
   Let $R$ be the set of turing machines $M_n^c$, for each pair of numbers $(n, c)$. On input $x$, $M_n^c$ will run the $n^{th}$ turing machine for $c|x|^c$ steps on input $x$. If the $n^{th}$ turing machine accepts in $\leq c|x|^c$ steps, $M_n^c$ will accept, otherwise $M_n^c$ will halt and reject.
@@ -70,7 +74,7 @@ Give two reductions to show that PTM is neither r.e.\ nor co-r.e.
   For each $f \in F(\p)$, there exists an $M_i \in R$ that computes $f$. Since $f$ is in $F(\p)$, $f$ is computable by a turing machine in polynomial time. That is, there exists a machine $M$ and a $c$ such that for all inputs of length $n$, $L(f) = f$ and $M$ always halts in $\leq cn^c$ steps. Since our language generates all such pairs of $M$s and $c$s, each $f$ must have a corresponding pair in the language.
 \end{proof}
 
-{\bf Answer by: Bruce Spang} \quad {\bf with edits by:}
+
 
 \end{enumerate}
 
