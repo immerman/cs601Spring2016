@@ -40,7 +40,7 @@
 
         \item $\Sigma_1 \subseteq \re$:
 
-          The following r.e. algorithm defines the set
+          The following r.e. algorithm accepts the set
           $S = \setb{n}{\exists x.~\phi(n, x)}$, for any $\phi \in P$:
 
           \begin{algorithmic}
@@ -58,21 +58,22 @@
     {\bf Answer by: Adam Nelson}
 
   \item $\cre = \Pi_1$ is a simple corollary of $\re = \Sigma_1$: For
-    $\cre \subseteq \Pi_1$, note that $\bar{W_i} = \setb{n}
+    $\cre \subseteq \Pi_1$, note that $\ov{W_i} = \setb{n}
     {\forall c.~\lnot\text{COMP}(i,n,c,1)}$, and, for $\Pi_1 \subseteq \cre$,
     note that changing the if-statement in problem 1 part (b) to
     \begin{algorithmic}
       \IF{$\lnot\phi(n, x)$}
-        \STATE reject
+        \STATE accept
       \ENDIF
     \end{algorithmic}
-    makes the algorithm co-r.e.
+    makes an r.e. algorithm accepting the complement of the set
+    $S = \setb{n}{\forall x.~\phi(n, x)}$.
 
     {\bf Answer by: Adam Nelson}
 
   \item $\text{EMPTY} = \setb{n}{W_n = \emptyset}$ is in $\Pi_1$:
 
-    $\text{EMPTY} = \setb{n}{\forall x c.~\lnot\text{COMP}(n,x,c,1)}$
+    $\text{EMPTY} = \setb{n}{\forall x c~(\lnot\text{COMP}(n,x,c,1))}$
 
     {\bf Answer by: Adam Nelson}
 
@@ -81,21 +82,20 @@
     If a TM is finite, then there must be maximum length, $l$, of string that
     it accepts.
 
-    $\text{FINITE} = \setb{n}{\exists l~\forall x c.~\lnot\text{COMP}(n,x,c,1)
-      \lor \left|x\right| \le l}$
+    $\text{FINITE} = \setb{n}{\exists l~\forall x c~(\lnot\text{COMP}(n,x,c,1)
+      \lor \left|x\right| \le l)}$
 
     {\bf Answer by: Adam Nelson}
 
   \item $\text{PTM} = \setb{n}{M_n~\text{runs in polynomial time for all inputs}}$
     is in $\Sigma_2$:
 
-    For our $\phi$, we use the function $\text{Halt}(i,x,n)$, which runs $M_i$
-    with input $x$ for $n$ cycles, then returns $1$ if it has halted by this
-    point, or $0$ otherwise. This runs in polynomial time on $x$ if
-    $n = c\left|x\right|^c$ for some constant $c$.
+    For our $\phi$, we use the function $\text{Halt}(i,x,w)$, which runs $M_i$
+    with input $x$ for $\abs{w}$ steps, then returns $1$ if it has halted by this
+    point, or $0$ otherwise. This runs in polynomial time on $(i,x,w)$.
 
-    $\text{PTM} = \setb{n}{\exists c.~\forall x l.~\left|x\right| \ge l 
-      \lor \text{Halt}(n,x,cl^c)}$
+    $\text{PTM} = \setb{n}{\exists c~\forall x w~(c\abs{x}^c >  \abs{w}
+      \lor \text{Halt}(n,x,w))}$
 
     {\bf Answer by: Adam Nelson}
 
