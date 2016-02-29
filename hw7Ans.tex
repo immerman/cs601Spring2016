@@ -15,13 +15,15 @@ proof reading would be appreciated.)
 
 Show that the following three problems are all NL complete:
 
-\textbf{Answers by: Dan Saunders}
+\textbf{Answers by: Dan Saunders} \quad {\bf with edits by: Larkin Flodin}
 
 \begin{enumerate}
 \item  EMPTY-DFA $ = \bigset{D}{D \mbox{ a deterministic finite automaton and } \sel(D) =
   \emptyset}$ 
 
-To show that $EMPTY-DFA$ is $NL$-complete, we must show that $EMPTY-DFA$ is both in $NL$, and for all languages $A$ $\in$ $NL$, $A$ $\leq$ $EMPTY-DFA$. We provide a reduction from $REACH$, an $NL$-complete language itself, to $\overline{EMPTY-DFA}$, taking advantage of the fact that $NL = coNL$, which will prove both of these conditions. The reduction will take instances of $REACH$ into instances of $\overline{EMPTY-DFA}$, and is as follows: 
+To show that $EMPTY-DFA$ is $NL$-complete, we must show that $EMPTY-DFA$ is both in $NL$, and for all languages $A$ $\in$ $NL$, $A$ $\leq$ $EMPTY-DFA$. To see that $EMPTY-DFA$ is in $NL$, we can use $\overline{REACH}$, which is in $NL$. We treat the DFA as a graph $G$ with vertices for each state in the DFA, and edges specified by the transition function. If there are multiple transitions from state $q_i$ to state $q_j$ (on different symbols), we can simply delete all but one of them. Then, for start state $q_0$ and each final state $f$, compute $\overline{REACH}(G, q_0, f)$, and accept if $(G, q_0, f) \in \overline{REACH}$ for every final state $f$. This requires only a constant amount of overhead beyond what is required for $\overline{REACH}$, so can be done in $NL$.
+
+We provide a reduction from $REACH$, an $NL$-complete language itself, to $\overline{EMPTY-DFA}$, taking advantage of the fact that $NL = coNL$ to show the $NL$-hardness of $EMPTY-DFA$. The reduction will take instances of $REACH$ into instances of $\overline{EMPTY-DFA}$, and is as follows: 
 
 We let node $s$ be the start state of the graph instance of $\overline{EMPTY-DFA}$, and $t$ the only final state in the graph. The vertices and edges of the $REACH$ instance are preserved in the graph of the instance of $\overline{EMPTY-DFA}$. Now, clearly this reduction takes space logarithmic in the size of the $REACH$ instance, as we are simply copying over the graph to the instance of $\overline{EMPTY-DFA}$. Now, this reduction will take tuples $<G, s, t>$ to a $DFA$ $D$ such that $L(D) \neq \emptyset$ iff there exists a path from $s$ to $t$ in $G$, and therefore, $REACH \leq \overline{EMPTY-DFA} \implies REACH \leq EMPTY-DFA \implies EMPTY-DFA$ is $NL$-complete, given that we may use the $NL REACH$ algorithm to decide $EMPTY-DFA$.
 
