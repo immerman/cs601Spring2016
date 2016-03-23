@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}
+\hwstyle
+\begin{document}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Answers to hw9} \hfill
+{Spring 2016}}
+\addtocounter{section}{1}
+
+\begin{enumerate}
+
+\item I believe that, in some ways, the complexity class NP includes most creative work that
+  people do, or at least that part of it that can be put on a CD when it is
+  done.  As an example, argue that the following set is NP-complete:
+
+  \[ \mbox{MATH}\qe \bigset{\phi \#^n}{\mbox{ZFC}\proves\phi \mbox{ and the
+      proof has length } \leq n \mbox{ characters}}\]
+
+  Here ``$\mbox{ZFC}\proves\phi$'' means that there is a formal proof of $\phi$ from the standard
+  axiomatization
+  of set theory, namely the Zermelo-Fraenkel axioms plus the axiom of choice.  However, especially as
+  we haven't talked about this, just assume that we have some simple but reasonably powerful
+  proof system that is machine readable and checkable.  As usual, to prove that MATH is NP complete
+  you should show that it is in NP, and then provide a reduction from 3SAT to MATH.
+
+
+\item The class $\thc^0$ is a rather interesting complexity class.  Show
+  that the following arithmetic operations are computable in $F(\thc^0)$:
+  \begin{enumerate}
+  \item The sum of two $n$-bit natural numbers.  [Hint: see notes from Descriptive Complexity Lecture]
+
+    \begin{proof}
+      In the \href{https://people.cs.umass.edu/~immerman/cs601/lect7.pdf}{descriptive complexity lecture}, we showed that addition is contained in $FO$. In the \href{https://people.cs.umass.edu/~immerman/cs601/lect12.pdf}{circuit complexity lecture}, we showed that $FO = AC^0 \in \thc^0$.
+    \end{proof}
+
+  \item The number of ``1''s in a binary string of length $n$.
+
+    \begin{proof}
+      We will build a depth-four circuit using a $O(n^k)$ threshold gates, where $n$ is the input size.
+
+      Our first layer will have $n$ threshold gates, $a_1...a_n$. $a_i$ will be on if there are $\geq i$ 1's in the input, so $a_i$ is just an $i$-threshold gate with a connection to each input value.
+
+      Our second layer again has $n$ gates, $b_1...b_n$. Gate $b_i$ will be on if gate $a_i$ is on and $a_{i+1}$ is not on. There will be only one gate on at this level, $b_k$, where $k$ is the number of 1s in the input.
+
+      Our final layer, $c_1...c_{\log{n}}$ will conver the number $k$ from $b_k$ to a binary value. Let $c_i=1$ if there is a $1$ in the $i^{\text{th}}$ position of $b_i$ and $b_i=1$. This takes a bunch of wires, but only a logarithmic number of gates.
+    \end{proof}
+
+  \item The sum of $n$ $n$-bit natural numbers: $C_1 + \cdots + C_n$
+
+    [Major Hint: break each $C_i$ into stripes: $C_i = A_i + B_i$ where $A_i$
+      has its first, third, fifth, etc.,  $\log n$ bits 0, $B_i$ has its even
+      groups of $\log n$ bits 0.  Then add up the $A_i$'s and the
+      $B_i$'s.  Finally just add the two sums using (a). The advantage of this is
+      that we only have to look at $\log n$ columns at a time to compute all the
+      carries.  In this way, you can use (b) to  reduce the problem of adding $n$ $n$-bit
+      numbers, to the problem of adding $\log n$ $\log(n)$-bit numbers.
+
+      Now, do this same reduction again: all you have to do is add $\log \log n$
+      $\log \log n$-bit numbers.  This last problem is so small that you can
+      build a gate for each possible sum and then just determine which one of
+      them has the correct input.]
+
+    \begin{proof}
+    \end{proof}
+
+  \item Multiplication of two $n$-bit integers.
+
+    \begin{proof}
+      We will multiply integers $a$ and $b$ of length $n$ using long multiplication. We will generate $n$ integers $c_1...c_n$, each with length $< 2n$. We will then add them using the answer to part C. Each $c_i = a << (i-1)$ if $b_i = 1$, and $c_i = 0$ otherwise. This takes $O(n + \text{addition})$ gates, and only adds one layer to generate each $c_i$.
+    \end{proof}
+
+  \item Multiplication of two $n\times n$ integer matrices, each of whose
+    entries is an integer of at most $n$ bits.
+
+    \begin{proof}
+      Let $A$, $B$ be the input matrices, and $C$ be the resulting matrix. Matrix multiplication is defined as $C_{ij} = \sum_{k=1}^n{A_{ik}*B_{ki}}$. Each multiplication in the sum can be done in $ThC^0$ by part D, and the addition of $n$ numbers can be done in $ThC^0$ by part C. Each index can be done in parallel, so the whole thing is in $ThC^0$
+    \end{proof}
+
+  \item It follows that multiplication of n $n\times n$ integer matrices, each of whose entries is an integer of at most $n$ bits can be done in  $\thc^1$.  Why? It turns out that almost all problems in linear algebra are reducible to this problem and thus doable in $\thc^1$.
+
+    \begin{proof}
+      Matrix multiplication is associative, so we can compute $C = A_1...A_n$ by solving $(A_1...A_{n/2})$ and $(A_{n/2+1}...A_n)$ and multiplying the results. Each of these multiplications halve the problem, so the subproblems have a depth of $\log{n}$. Each subproblem requires a constant number of gates to multiply the matrices by part E, so the circuit depth is $O(\log{n}) \in ThC^1$
+    \end{proof}
+  \end{enumerate}
+
+  {\bf Answer by: Bruce Spang} \quad {\bf with edits by:}
+
+\end{enumerate}
+
+\end{document}
