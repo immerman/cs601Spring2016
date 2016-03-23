@@ -1,0 +1,64 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}                   
+\hwstyle
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Homework 10} \hfill 
+{Due in class Tue, Mar.\ 22, 2016}}
+\addtocounter{section}{9}
+
+As ususal, please ask on Piazza if parts of the following two problems need hints or clarifications.
+
+\begin{enumerate}
+
+\item Prove Proposition 14.2 from Lecture 14:  The set of problems accepted by uniform, bounded-width branching
+  programs is contained in  $\nc^1$.  Hint: use an argument similar to Savitch's Theorem and similar
+  to the proof that $\nl \subseteq \sac^1$.
+
+\item  %from spring 01
+In a Tiling problem, we are
+given an integer, $n$, a set of square tile types, $T = \set{t_0, \ldots, t_k}$, together with two
+relations $H,V 
+\subseteq T \times T$, where $H(t_1,t_2)$ means that $t_2$ can be placed immediately to the right of
+$t_1$ and $V(t_1,t_2)$ means that $t_2$ can be placed immediately below $t_1$.  TILING is the
+problem of deciding whether there exists an $n\times n$ grid of tiles satisfying the horizontal and
+vertical constraints and with $t_0$ in the upper left position.
+
+Show the following:
+
+\begin{enumerate}
+\item TILING is NEXPTIME complete.
+\item If $n$ is given in unary, then TILING is NP complete.
+\item The problem of testing whether for all $n$ there exists such an $n\times n$ tiling is
+  co-r.e. complete.  
+\end{enumerate}
+
+
+[Hint: you can encode a Turing machine computation via such tiles.  Let $N$
+be a nondeterministic TM.  Consider a set of tiles that are labeled with
+the tape symbols from $\Sigma$ plus an additional set of tiles that are
+labeled with triples $\angle{q,a,\delta}$ where $q$ is a state, $a\in
+\Sigma$ and $\delta\in\set{0,1}$ indicates which nondeterministic choice
+the machine will make at this step, plus some additional tiles.  
+
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}\hline
+$\triangleright$ & $q_0,a,\delta_0$ & $b;q$ & $c$ & $\sqcup$\\ \hline
+$\triangleright$ & $d$ & $q,b,\delta$ & $c;q'$ & $\sqcup$\\ \hline
+$\triangleright$ & $d$ & $e$ & $q',c,\delta'$ & $\sqcup$\\ \hline
+\end{tabular}
+\end{center}
+
+Suppose
+for example that choice $\delta$ of $N$ in state $q$ looking at a $b$ is
+to write $e$, and go to the right into state $q'$.  Then the tile marked
+$\angle{q,b,\delta}$ would have a signal at its bottom indicating that the
+next tile should contain symbol $e$ and it could have a signal on its right
+indicating that the cell on its right should have a signal on its bottom
+indicating that the cell below should be in state $q'$.]
+\end{enumerate}
+
+\end{document}
+
