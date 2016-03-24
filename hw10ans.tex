@@ -1,0 +1,94 @@
+\documentclass[12pt]{article}
+\usepackage{defs601}                   
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\hwstyle
+\begin{document}
+\thispagestyle{empty}
+\noindent\framebox[\textwidth]{
+{\normalsize CS601:} \hfill {\bf Homework 10} \hfill 
+{Due in class Tue, Mar.\ 22, 2016}}
+\addtocounter{section}{9}
+
+As ususal, please ask on Piazza if parts of the following two problems need hints or clarifications.
+
+\begin{enumerate}
+
+\item Prove Proposition 14.2 from Lecture 14:  The set of problems accepted by uniform, bounded-width branching
+  programs is contained in  $\nc^1$.  Hint: use an argument similar to Savitch's Theorem and similar
+  to the proof that $\nl \subseteq \sac^1$.\\ \\
+   {\bf Answer by: Bendan Teich} \quad {\bf with edits by:}\\
+   \begin{proof} \\
+   	Given a bounded width branching program with k maximum width and n columns, we can construct a graph where $v_{i,j}$ denotes the $i^{th}$ position in the $j^{th}$ column of the program, and we include an edge for each of the satisfied transitions in the program.
+   	We can then write pseudocode program similar to Savitch's Theorem where we can calculate if there is a path of length less than d from $v_{i,j}$ to $v_{x,y}$:
+   	\begin{algorithm}[H]
+   	\caption{$REACH(v_{i,j},v_{x,y},d)$}
+   		\If{d == 1} \\
+   		 \text{\qquad} \Return\  E($v_{i,j},v_{x,y}$)\\
+		\For{$i \gets 1\ to\ k$}\\
+			\text{\qquad} \If{$REACH(v_{i,j}, v_{i , \frac{y}{2}}, \frac{d}{2}) \wedge REACH(v_{i , \frac{y}{2}}, v_{x,y}, \frac{d}{2})$}\\
+				\text{\qquad} \text{\qquad} \Return\ True\\
+		\Return\ False\\
+	\end{algorithm}
+	With this program we could determine whether or not there is an accepting computation from the start state to the accept state in the Bounded Width Branching Program of length at most n.  This program can be created for any given Bounded Width Branching Program using $NC^1$ circuits by replacing the for loop with a tree of $O(k\log{k})$  OR gates, with one leaf for each of the k possible choices of i, which is a constant number of gates.  We can then attach an AND gate to each of these OR gates, and attach the AND gate to the two circuits needed for the length $\frac{d}{2}$ PATH computations.  This will require $O(\log n)$ depth repeating our constant number of AND and OR gates at each branch to reach the computation where d = 1.  For the d=1 case we can simply check the input to see if it satisfies an edge between the two nodes, which takes at most one not gate to invert the input bit since each edge's condition is fixed by the program we are reducing to the circuit.  So overall this program takes $O(\log n)$ depth and polynomially many gates, so it is in $NC^1$.
+	
+   \end{proof}
+
+\item  %from spring 01
+In a Tiling problem, we are
+given an integer, $n$, a set of square tile types, $T = \set{t_0, \ldots, t_k}$, together with two
+relations $H,V 
+\subseteq T \times T$, where $H(t_1,t_2)$ means that $t_2$ can be placed immediately to the right of
+$t_1$ and $V(t_1,t_2)$ means that $t_2$ can be placed immediately below $t_1$.  TILING is the
+problem of deciding whether there exists an $n\times n$ grid of tiles satisfying the horizontal and
+vertical constraints and with $t_0$ in the upper left position.
+
+
+
+Show the following:
+
+   {\bf Answer by: Bendan Teich} \quad {\bf with edits by:}
+
+\begin{enumerate}
+\item TILING is NEXPTIME complete.\\
+\begin{proof}\\
+	TILING $\in$ NEXPTIME:\\
+	Given a value N with a binary representation of length n, we can guess a N x N tiling and check that all tiles satisfy our constraints using $O(N^2) = O(2^n)$ time.\\
+	
+	NEXPTIME $\leq$ TILING: \\ 
+	$f(M, w) \mapsto (T, H, V)$ \\
+	Let $w_i$ be the $i^{th}$ value of our input string.
+	First create a tile $[q_0, w_1, START]_1$, which will be our top-left tile. For $2 \leq i \leq n$ we then add a tile $[w_{i}]_1$ and set H($[w_{i}]_1$, $[w_{i+1}]_1)$ to true. We also set $H([q_0, w_1, START]_1, [w_2]_1)$ to true.  This will force the top row of our tiling to represent M's tape before computation begins. Then add tiles  $[q_0, w_1, \delta]_2$ for each possible nondeterministic choice of $\delta$, so we can simulate making our first nondeterministic choice.\\
+	
+	Now for $j \gets 2\ to\ n$ and $\forall x \in \Sigma$ add tile $[x]_j$ and set $V([x]_j, [x]_{j+1})$ to true.  We will be using the row subscripts to keep track of when we hit the $n^{th}$ row in order to require an accepting state by then.  For each $x \in \Sigma$ and each transition in M of the form $<q, a, \delta> \mapsto <q', a', L/R>$ we add tiles $[q, a, \delta]_j$ and $[q', x, L/R]_j$.  The first tile will represent our tape head, state, and nondeterministic choice for our next move.  The second tile will be used to signal that in the next step we will have the tape head in this position in state q'.  So for any transitions that move left we set  $H([q',x,L]_j, [q, a, \delta]_j)$ to true, and for right moving transitions we set  $H([q, a, \delta]_j, [q',x,R]_j) $ to true.  In both cases we set $V([q',x,L/R]_j, [q', x, \delta]_{j+1})$ to true so that the tape head moves to the correct place and state in the next step.  
+	
+We also need to  set $V([q, a, \delta]_j,[a']_{j+1})$ to true so that the new letter may be written. Since a transition signal marked with an `L' must have the transition tile to its immediate right, and the opposite is true for the `R' signal tile, these tiles will only ever be immediately adjacent to the tape head tile, and only one can be present on a given row.  $\forall x,y \in \Sigma$ set $H([y]_j, [q',x,L]_j)$ and $ H([q',x,R]_j, [y]_j)$ to true so that the signals can be placed. Also set all of the vertical relations from any non-signal tile on row j to any signal tile on row j+1 to true.  Now each row in the tiling will represent a stage in computation that could come immediately after the preceding row.\\
+
+For any transitions into a halting state, or hints involving a halting state, we allow vertical placement of those tiles below themselves so that a row that hints an accepting computation on the next step may be repeated all the way down to the $n^{th}$ row.\\
+
+The only change we have to make for j=n is that we remove any signal tiles with subscript n that do not signal an accepting state on the next step.  This forces the last row to be tileable iff we would have an accepting computation ending in an accept state on row n+1.  Since row 1 to 2 did not involve a computation step, this means our output (T, H, V, n) is tileable iff M accepts w in n steps.  Since we are only reducing NEXPTIME machines, there exists constants $c_1$, $c_2$ and $c_3$ such that M halts in at most $c_1 2^{c_2|w|^{c_3}}$ steps on any input, so we use this as our value for n.
+
+\end{proof}
+\item If $n$ is given in unary, then TILING is NP complete.\\
+\begin{proof}\\
+	The reduction is the same as the NEXPTIME case, except now the value of n is linear in the length of its representation, so our grid is $O(n^2)$, which puts the problem in NP.
+
+\end{proof}
+\item The problem of testing whether for all $n$ there exists such an $n\times n$ tiling is
+  co-r.e. complete.  \\
+  \begin{proof}\\
+  	ALL-TILING $\in$ CO-R.E. \\
+  	We can dovetail all possible sizes n and reject if we find a value of n that doesn't have a tiling.\\
+  	\\
+  	$\overline{HALT}$ $\leq$ ALL-TILING \\
+  	f(M,w): build a TM M' that on input x runs M on w.  If it halts, accept.\\
+  	Then we can do the same reduction as we did for NEXPTIME on M' except we will only have deterministic transitions, we no longer need row numbers, we do not need to force the input on row 1 other than the initial start state transition tile since M ignores its input, and we remove any tiles that involve a halting state. Now any computation that results in a halting state will be unable to be tiled.  So f(M,w) $\in$ TILING iff M does not halt on w.
+  	
+  \end{proof}
+  
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
+
