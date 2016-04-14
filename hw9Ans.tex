@@ -23,6 +23,17 @@
   proof system that is machine readable and checkable.  As usual, to prove that MATH is NP complete
   you should show that it is in NP, and then provide a reduction from 3SAT to MATH.
 
+  \begin{itemize}
+  \item $MATH \in NP$: With a nondeterministic TM N and input $\phi \#^n$, N can guess the steps of the proof and confirm that the last step is $\phi$.
+  \item $MATH$ is NP-hard: To do this we will reduce 3SAT to MATH.
+
+    For a given input $\phi = C_1 \land C_2 \land \cdots \land C_n$, we can consider each clause in $\phi$ as one step in the proof, where the step is valid iff at least one element in the clause is true. The proof is therefore the values of $x_1,x_2,\cdots ,x_n$ such that $\phi$ is true.
+
+    Therefore $f(\phi) = \phi\prime \#^{17|\phi|^2}$. Therefore 3SAT reduces to MATH, and MATH is NP-hard.
+  \end{itemize}
+  
+   {\bf Answer by: John Lalor} \quad {\bf with edits by:}
+
 
 \item The class $\thc^0$ is a rather interesting complexity class.  Show
   that the following arithmetic operations are computable in $F(\thc^0)$:
@@ -61,6 +72,7 @@
       them has the correct input.]
 
     \begin{proof}
+      Using the hint above, we can break each $C_i$ into stripes, and then add the stripes together. You then stripes these values again, so that the size is $\log \log(n)$, for values this small, you can simply guess the correct bits and check them using a universal quantifier.
     \end{proof}
 
   \item Multiplication of two $n$-bit integers.
@@ -83,7 +95,7 @@
     \end{proof}
   \end{enumerate}
 
-  {\bf Answer by: Bruce Spang} \quad {\bf with edits by:}
+  {\bf Answer by: Bruce Spang} \quad {\bf with edits by: John Lalor}
 
 \end{enumerate}
 

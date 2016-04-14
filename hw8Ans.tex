@@ -9,24 +9,24 @@
 
 \begin{enumerate}
 
-\item Prove that EMPTY-CFL is P-complete. Note that we already proved this was in P in Hw 4. I suggest that you reduce MCVP to EMPTY-CFL
+\item Prove that EMPTY-CFL is P-complete. Note that we already proved this was in P in HW 4. I suggest that you reduce MCVP to EMPTY-CFL
 
 \begin{itemize}
 
 \item We will reduce MCVP to $\overline{\textrm{EMPTY-CFL}}$ by building the appropriate grammar to evaluate a given monotone circuit C. Consider each node in the circuit to be a symbol in the alphabet. The root of the circuit is the start state, and the symbols $\{0,1\}$ are the terminals. The transition rules are built as follows: For nodes that act as AND gates, the rule for the symbol points to both of the children. For example, if node G5 is an AND node and has children G7 and G9, then the associated rule would be G5 $\implies$ G7, G9. For a node associated with an OR gate, there would be two rules, one pointing to each child. Using the same nodes as above, the two rules would be G5 $\implies$ G7 and G5 $\implies$ G9. If the input string can be generated using these rules, then accept. Otherwise reject.
 
-We already showed that EMPTY-CFL is in P (HW 4), and the above reduction shows that $\overline{\textrm{EMPTY-CFL}}$ is P-hard, EMPTY-CFL is P-complete, as the class is closed under complementation.
+We already showed that EMPTY-CFL is in P (HW 4), and the above reduction shows that $\overline{\textrm{EMPTY-CFL}}$ is P-hard. Because P is closed under complementation, EMPTY-CFL is P-complete.
 
 \end{itemize}
 
 {\bf Answer by: John Lalor} \quad {\bf with edits by:}
 
-\item Let $S_2 = \{(a,w,1^r) | M_a(w) = 1 \textrm{ using at most \textit{r} work tape cells}$ Prove that $S_2$ is PSPACE complete.
+\item Let $S_2 = \{(a,w,1^r) | M_a(w) = 1 \textrm{ using at most \textit{r} work tape cells}\}$ Prove that $S_2$ is PSPACE complete.
 
 
 \begin{itemize}
 
-\item Take any ATIME[$n^k$] TM M, with input $w$ and $n = |w|$. Let M write down all of the alternating choices, called $\bar{c}$. Now build a TM D that runs $D(\bar{c},w)$ for $2^{cr}$ steps. If the machine goes more than $2^{cr}$ steps, reject because it has entered an infinite loop. Otherwise, if D accepts, then accept. Otherwise reject. This machine is in PSPACE because of the timer, and is PSPACE-hard from the reduction above. 
+\item Take any ATIME[$n^k$] TM M, with input $w$ and $n = |w|$. Let M write down all of the alternating choices, called $\bar{c}$. Now build a TM D that runs $D(\bar{c},w)$ for $2^{cr}$ steps. If D runs for more than $2^{cr}$ steps, reject because it has entered an infinite loop. If D halts before $2^{cr}$ steps, return the output from D (e.g. if D accepts, then accept, otherwise reject). This machine is in PSPACE because of the timer, and is PSPACE-hard from the reduction above. 
 
 \end{itemize}
 

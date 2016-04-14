@@ -15,7 +15,7 @@ proof reading would be appreciated.)
 
 Show that the following three problems are all NL complete:
 
-\textbf{Answers by: Dan Saunders} \quad {\bf with edits by: Larkin Flodin}
+\textbf{Answers by: Dan Saunders} \quad {\bf with edits by: Larkin Flodin, John Lalor}
 
 \begin{enumerate}
 \item  EMPTY-DFA $ = \bigset{D}{D \mbox{ a deterministic finite automaton and } \sel(D) =
@@ -37,7 +37,9 @@ This construction is exactly analogous to the first problem, and so we may immed
 
 \item EQUAL-DFA $ =  \bigset{(D_1,D_2)}{D_1,D_2 \mbox{ DFAs};\;\sel(D_1) =\sel(D_2)}$
 
-It is clear that $< D_1$, $D_2 >$ is in $EQUAL-DFA$ if and only if the symmetric difference of $D_1$, $D_2$ is in $EMPTY-DFA$, and so, $EQUAL-DFA \ in NL$, since $EMPTY-DFA \in NL$ and $EQUAL-DFA \leq EMPTY-DFA$.
+  It is clear that $< D_1$, $D_2 >$ is in $EQUAL-DFA$ if and only if the symmetric difference of $D_1$, $D_2$ is in $EMPTY-DFA$, and so, $EQUAL-DFA \in NL$, since $EMPTY-DFA \in NL$ and $EQUAL-DFA \leq EMPTY-DFA$.
+
+  [{\color{blue} Note: another way to show $EQUAL-DFA \in NL$ is to show $\overline{EQUAL-DFA} \in NL$ using nondeterminism. We can guess a value in one of the languages where they do not match, so $\overline{EQUAL-DFA} \in NL$. Then, since $NL$ is closed under complementation, $EQUAL-DFA \in NL$}]
 
 We now show that $EQUAL-DFA$ is $NL$-hard by reducing the $NL$-complete language $EMPTY-DFA$ to $EQUAL-DFA$ as follows:
 
